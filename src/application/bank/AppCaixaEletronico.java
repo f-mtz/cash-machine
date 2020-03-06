@@ -16,10 +16,10 @@ public class AppCaixaEletronico {
 			Locale.setDefault(Locale.US);
 			Scanner sc = new Scanner(System.in);
 			
-			System.out.println("Bem vindo(a) ao Santander: ");
+			System.out.println("Bem vindo(a) ao Banco Genérico: ");
 			System.out.println("Digite S para saque");
 			System.out.println("D para depósito");
-	 		System.out.println("T para transferências entre contas Caixa: ");
+	 		System.out.println("T para transferências entre contas: ");
 	 		System.out.println("E para Sair: ");
 			
 	 		
@@ -85,7 +85,7 @@ public class AppCaixaEletronico {
 							}
 				
 				else if(n == 'E') {
-					System.out.println("Obrigado por utilizar os caixas Santander, volte sempre !!!");
+					System.out.println("Obrigado por utilizar os Caixas Genéricos, volte sempre !!!");
 					
 				}
 			}

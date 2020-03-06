@@ -4,12 +4,15 @@ import java.text.SimpleDateFormat;
 
 public class Conta {
 	
-	int accountNumber;
-	Client cliente;
-	double saldo = 1000;
-	public Conta() {
+	private int accountNumber;
+	private Client cliente;
+	private double saldo;
+	public Conta conta;
+	private int qtdSaques;
+	private int qtdDepositos;
+	private int qtdTransferencias;
 	SimpleDateFormat date;
-	}
+	
 
 	public Conta(int accountNumber, Client cliente, double saldo) {
 		this.accountNumber = accountNumber;
@@ -45,28 +48,30 @@ public class Conta {
 		else if (x == 0) {
 			deposito(5);
 		}
-			return this.saldo -= (x + 5);
+		qtdSaques++;
+		return this.saldo -= (x + 5);
 	}
 	/**DEPOSITO*/
 	public double deposito(double y) {
 		if(y > 1000) {
 			System.out.println("você não pode depositar mais que 1000 reais por dia !!!");
 		}
+		qtdDepositos++;
 		return this.saldo += y;
 	}
+	/**TRANSAFERNCIAS*/
 	public void transferir(Conta receptora, double valor) {
 		this.saque(valor);
 		receptora.deposito(valor);
+		qtdTransferencias++;
 	}
-	// https://stackoverflow.com/questions/2979383/java-clear-the-console
-		public static void clearScreen() {
-			System.out.print("\033[H\033[2J");
-			System.out.flush();
-		}	
-	
+
 	public String toString() {
 		return "Número da conta: " + accountNumber + "\n"+
-				"O saldo atual da conta é: " + saldo
+				"O saldo atual da conta é: " + saldo + "\n" +
+				"Quantidade de saques: " + qtdSaques +"\n" +
+				"Quantidade de depósitos: " + qtdDepositos +"\n" +
+				"Quantidade de transferências: " + qtdTransferencias +"\n"
 			;
 	}
 }
