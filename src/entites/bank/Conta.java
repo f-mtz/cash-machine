@@ -11,13 +11,15 @@ public class Conta {
 	private int qtdSaques;
 	private int qtdDepositos;
 	private int qtdTransferencias;
+	private double limitSaque;
 	SimpleDateFormat date;
 	
 
-	public Conta(int accountNumber, Client cliente, double saldo) {
+	public Conta(int accountNumber, Client cliente, double saldo, double limitSaque) {
 		this.accountNumber = accountNumber;
 		this.cliente = cliente;
 		this.saldo = saldo;
+		this.limitSaque = limitSaque;
 	}
 
 	public int getAccountNumber() {
@@ -42,15 +44,41 @@ public class Conta {
 		return saldo;
 	}
 	/**SAQUE*/
-	public double saque(double x) {
-		if(x > saldo) {
-			System.out.println("você negativou sua conta !");}
-		else if (x == 0) {
-			deposito(5);
+	public void saque(double x) {
+		
+		if(x >= saldo && x < (saldo + limitSaque) && qtdSaques<4) {
+			qtdSaques++;
+			System.out.println("você negativou sua conta em " + (saldo - x));
+			this.saldo -= x;
 		}
-		qtdSaques++;
-		return this.saldo -= (x + 5);
+		else if(x >= saldo && x < (saldo + limitSaque) && qtdSaques> 3) {
+			qtdSaques++;
+			System.out.println("você sacou: " + (x) + " reais");
+			this.saldo -= (x + 5);
+			}
+		else if (x == 0) {
+			System.out.println("Não houve saque na sua conta");
+		}
+		else if(x > (saldo+limitSaque)) {
+			System.out.println("você não pode sacar o valor: " + x);
+		}
+		else if(x <= saldo && qtdSaques <= 3) {
+			qtdSaques++;
+			System.out.println("você sacou: " + (x) + " reais");
+			this.saldo -= (x);
+			}
+		else if(x < saldo && qtdSaques >= 4) {
+			qtdSaques++;
+			System.out.println("você sacou: " + (x) + " reais");
+			this.saldo -= (x + 5);
+			}
+		else {
+			qtdSaques++;
+			this.saldo -= (x + 5);
+		}
 	}
+	
+	
 	/**DEPOSITO*/
 	public double deposito(double y) {
 		if(y > 1000) {

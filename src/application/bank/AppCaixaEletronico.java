@@ -27,13 +27,13 @@ public class AppCaixaEletronico {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			Date d = new Date();
 				
-			Conta conta12 = new Conta(1001, new Client("Heliot", 123), 1000);
-			Conta conta13 = new Conta(1002, new Client("Obrienn", 456), 500);
+			Conta conta12 = new Conta(1001, new Client("Bryan", 123), 1000.0, 200.0);
+			Conta conta13 = new Conta(1002, new Client("Sophie", 456), 500.0, 200.0);
+			
 			while(true) {
 				char n = sc.next().charAt(0);
 			
 				if(n == 'S') {
-							
 							System.out.println("Digite o valor a ser sacado: ");
 							double x = sc.nextDouble();
 							conta12.saque(x);
