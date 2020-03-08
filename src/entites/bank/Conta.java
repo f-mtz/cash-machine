@@ -1,6 +1,7 @@
 package entites.bank;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Conta {
 	
@@ -12,11 +13,12 @@ public class Conta {
 	private int qtdDepositos;
 	private int qtdTransferencias;
 	private double limitSaque;
-	SimpleDateFormat date;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	Date date = new Date();
 	
 
-	public Conta(int accountNumber, Client cliente, double saldo, double limitSaque) {
-		this.accountNumber = accountNumber;
+	public Conta(int numeroDaConta, Client cliente, double saldo, double limitSaque) {
+		this.accountNumber = numeroDaConta;
 		this.cliente = cliente;
 		this.saldo = saldo;
 		this.limitSaque = limitSaque;
@@ -95,11 +97,16 @@ public class Conta {
 	}
 
 	public String toString() {
-		return "Número da conta: " + accountNumber + "\n"+
-				"O saldo atual da conta é: " + saldo + "\n" +
+		return 	"Cliente: "+ cliente.getHolderName() +"\n" +
+				"CPF: "+cliente.getCpf()+ "\n" +
+				"Data & Hora da trasação: "+date+"\n" +
+				"Número da conta: " + accountNumber + "\n"+
+				"O saldo atual da conta é: " + saldo + "\n\n" +
+				
 				"Quantidade de saques: " + qtdSaques +"\n" +
 				"Quantidade de depósitos: " + qtdDepositos +"\n" +
-				"Quantidade de transferências: " + qtdTransferencias +"\n"
-			;
+				"Quantidade de transferências: " + qtdTransferencias +"\n"+
+				"--------------------"
+				;
 	}
 }
