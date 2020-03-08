@@ -47,7 +47,6 @@ public class Conta {
 	}
 	/**SAQUE*/
 	public void saque(double x) {
-		
 		if(x >= saldo && x < (saldo + limitSaque) && qtdSaques<4) {
 			qtdSaques++;
 			System.out.println("você negativou sua conta em " + (saldo - x));
@@ -95,6 +94,23 @@ public class Conta {
 		receptora.deposito(valor);
 		qtdTransferencias++;
 	}
+	// https://stackoverflow.com/questions/2979383/java-clear-the-console
+		public static void clearScreen() {
+			System.out.print("\033[H\033[2J");
+			System.out.flush();
+		}
+		public String csvPrinter() {
+			return  ""+
+					cliente.getHolderName() +"; " +
+					cliente.getCpf()+ "; " +
+					date+"; " +
+					accountNumber + "; "+
+					saldo + "; " +
+					qtdSaques +"; " +
+					qtdDepositos +"; " +
+					qtdTransferencias
+					;
+		}
 
 	public String toString() {
 		return 	"Cliente: "+ cliente.getHolderName() +"\n" +
