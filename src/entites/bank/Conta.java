@@ -1,12 +1,15 @@
 package entites.bank;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Conta {
+
+public class Conta{
 	
 	private int accountNumber;
-	private Client cliente;
+	private Client cliente = new Client(null, 0);
 	private double saldo;
 	public Conta conta;
 	private int qtdSaques;
@@ -17,30 +20,47 @@ public class Conta {
 	Date date = new Date();
 	
 
+	public Conta getConta() {
+		return conta;
+	}
+
+	public int getQtdSaques() {
+		return qtdSaques;
+	}
+
+	public int getQtdDepositos() {
+		return qtdDepositos;
+	}
+
+	public int getQtdTransferencias() {
+		return qtdTransferencias;
+	}
+
+	public double getLimitSaque() {
+		return limitSaque;
+	}
+
+	public SimpleDateFormat getSdf() {
+		return sdf;
+	}
+
+	public Date getDate(int year, int month) {
+		return date;
+	}
 	public Conta(int numeroDaConta, Client cliente, double saldo, double limitSaque) {
 		this.accountNumber = numeroDaConta;
 		this.cliente = cliente;
 		this.saldo = saldo;
 		this.limitSaque = limitSaque;
-	}
+		}
 
 	public int getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(int accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-
 	public Client getCliente() {
 		return cliente;
 	}
-
-	public void setCliente(Client cliente) {
-		this.cliente = cliente;
-	}
-
 
 	public double getSaldo() {
 		return saldo;
@@ -79,6 +99,39 @@ public class Conta {
 		}
 	}
 	
+	/**SAQUE*/
+	public void saqueT(double x) {
+		if(x >= saldo && x < (saldo + limitSaque) && qtdTransferencias<4) {
+			qtdTransferencias++;
+			System.out.println("você negativou sua conta em " + (saldo - x));
+			this.saldo -= x;
+		}
+		else if(x >= saldo && x < (saldo + limitSaque) && qtdTransferencias> 3) {
+			qtdTransferencias++;
+			System.out.println("você transferiu: " + (x) + " reais");
+			this.saldo -= (x + 5);
+			}
+		else if (x == 0) {
+			System.out.println("Não houve saldo transferido: ");
+		}
+		else if(x > (saldo+limitSaque)) {
+			System.out.println("você não pode transferir o valor: " + x);
+		}
+		else if(x <= saldo && qtdTransferencias <= 3) {
+			qtdTransferencias++;
+			System.out.println("você transferiu: " + (x) + " reais");
+			this.saldo -= (x);
+			}
+		else if(x < saldo && qtdTransferencias >= 4) {
+			qtdTransferencias++;
+			System.out.println("você transferiu: " + (x) + " reais");
+			this.saldo -= (x + 5);
+			}
+		else {
+			qtdTransferencias++;
+			this.saldo -= (x + 5);
+		}
+	}
 	
 	/**DEPOSITO*/
 	public double deposito(double y) {
@@ -90,15 +143,11 @@ public class Conta {
 	}
 	/**TRANSAFERNCIAS*/
 	public void transferir(Conta receptora, double valor) {
-		this.saque(valor);
+		this.saqueT(valor);
 		receptora.deposito(valor);
-		qtdTransferencias++;
+	
 	}
-	// https://stackoverflow.com/questions/2979383/java-clear-the-console
-		public static void clearScreen() {
-			System.out.print("\033[H\033[2J");
-			System.out.flush();
-		}
+		
 		public String csvPrinter() {
 			return  ""+
 					cliente.getHolderName() +"; " +
